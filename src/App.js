@@ -1,4 +1,7 @@
 import React from 'react';
+
+import AdvisorContainer from './modules/advisor/containers/AdvisorContainer';
+
 import logo from './static/adviqo-logo-mobile.png';
 import './App.css';
 
@@ -12,7 +15,7 @@ function App() {
         </p>
       </header>
       <main>
-        Yoloo
+        <AdvisorContainer />
       </main>
     </div>
   );
