@@ -1,24 +1,46 @@
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 import AdvisorContainer from './modules/advisor/containers/AdvisorContainer';
 
 import logo from './static/adviqo-logo-mobile.png';
-import './App.css';
+import theme from './theme';
 
-function App() {
+const styles = theme => ({
+  appToolbar: {
+    justifyContent: 'center'
+  },
+  appLogo: {
+    height: '50px',
+    pointerEvents: 'none',
+    marginRight: '20px',
+  },
+  main: {
+    textAlign: 'center'
+  }
+});
+
+function App(props) {
+  const { classes } = props;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Adviqo Challenge
-        </p>
-      </header>
-      <main>
-        <AdvisorContainer />
-      </main>
-    </div>
+    <MuiThemeProvider theme={theme}>
+        <AppBar position="static">
+          <Toolbar className={classes.appToolbar}>
+            <img src={logo} className={classes.appLogo} alt="logo" />
+            <Typography variant="title" color="inherit">
+              Challenge
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <main className={classes.main}>
+          <AdvisorContainer />
+        </main>
+    </MuiThemeProvider>
   );
 }
 
-export default App;
+export default withStyles(styles)(App);
