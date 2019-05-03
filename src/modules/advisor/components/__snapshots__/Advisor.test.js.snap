@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render Advisor with proper values 1`] = `
+<tr>
+  <td>
+    Merey Zholdas
+  </td>
+  <td>
+    Kazakh
+  </td>
+  <td>
+    online
+  </td>
+  <td>
+    4
+  </td>
+</tr>
+`;
