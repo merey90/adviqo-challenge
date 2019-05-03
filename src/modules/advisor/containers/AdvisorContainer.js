@@ -1,9 +1,13 @@
 import React from 'react';
 import Advisor from '../components/Advisor';
+import FilterForm from '../components/FilterForm';
 
 class AdvisorContainer extends React.Component {
   constructor (props) {
     super(props);
+
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
 
     this.state = {
       advisors: [],
@@ -48,16 +52,16 @@ class AdvisorContainer extends React.Component {
   async mockBackend (filter) {
     return new Promise((resolve) => {
       const dbAdvisors = [{
-        id: 2,
+        id: 1,
         fullName: 'Merey Zholdas',
         language: 'kazakh',
         status: 'online',
         reviews: 4
       }, {
-        id: 1,
+        id: 2,
         fullName: 'Bruce Wayne',
         language: 'english',
-        status: 'online',
+        status: 'offline',
         reviews: 10
       }];
 
@@ -87,22 +91,31 @@ class AdvisorContainer extends React.Component {
   }
 
   async sortAdvisorsBy (column) {
-    const { filter } = this.state;
+    const filter = {...this.state.filter};
     let sortDirection = 'desc';
     if(column === filter.sortBy) {
       sortDirection = filter.sortDirection === 'desc' ? 'asc' : 'desc';
     }
 
-    const newFilter = {
-      ...filter,
-      sortBy: column,
-      sortDirection
-    };
+    filter.sortBy = column;
+    filter.sortDirection = sortDirection;
 
-    await this.setState({
-      filter: newFilter
+    await this.setState({ filter });
+
+    this.getAdvisors();
+  }
+
+  handleInputChange (e) {
+    const { value, name } = e.target;
+    const filter = {...this.state.filter};
+    filter[name] = value;
+    this.setState({
+      filter
     });
+  }
 
+  handleFormSubmit (e) {
+    e.preventDefault();
     this.getAdvisors();
   }
 
@@ -110,6 +123,11 @@ class AdvisorContainer extends React.Component {
     const { fetching, advisors } = this.state;
     return (
       <div className='advisor-container'>
+        <FilterForm
+          handleInputChange={this.handleInputChange}
+          handleFormSubmit={this.handleFormSubmit}
+          filter={this.state.filter}
+        />
         <table>
           <thead>
             <tr>

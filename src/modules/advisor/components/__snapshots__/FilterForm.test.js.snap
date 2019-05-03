@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render FilterForm 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <label>
+     All:
+    <input
+      checked={true}
+      name="status"
+      onChange={[Function]}
+      type="radio"
+      value="all"
+    />
+  </label>
+  <label>
+     Online:
+    <input
+      checked={false}
+      name="status"
+      onChange={[Function]}
+      type="radio"
+      value="online"
+    />
+  </label>
+  <label>
+     Offline:
+    <input
+      checked={false}
+      name="status"
+      onChange={[Function]}
+      type="radio"
+      value="offline"
+    />
+  </label>
+  <label>
+     Language:
+    <select
+      defaultValue="all"
+      name="language"
+      onChange={[Function]}
+    >
+      <option
+        value="all"
+      >
+        All
+      </option>
+      <option
+        value="english"
+      >
+        English
+      </option>
+      <option
+        value="kazakh"
+      >
+        Kazakh
+      </option>
+    </select>
+  </label>
+  <button
+    type="submit"
+  >
+    Filter
+  </button>
+</form>
+`;
