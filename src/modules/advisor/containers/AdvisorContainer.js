@@ -2,8 +2,8 @@ import React from 'react';
 import Advisor from '../components/Advisor';
 
 class AdvisorContainer extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       advisors: [{
