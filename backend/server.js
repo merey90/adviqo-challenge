@@ -10,17 +10,13 @@ const port = 5000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('PORT 5000');
-});
-
 const statusMap = {
   '-1': 'all',
   '1': 'online',
   '0': 'offline'
 };
 
-app.post('/', async (req, res) => {
+app.get('/', async (req, res) => {
   const {
     sortBy = 'reviews',
     sortDirection = 'desc',
