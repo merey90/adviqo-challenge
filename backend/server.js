@@ -7,16 +7,15 @@ const readFile = util.promisify(fs.readFile);
 const app = express();
 const port = 5000;
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const statusMap = {
-  '-1': 'all',
-  '1': 'online',
-  '0': 'offline'
-};
-
-app.get('/', async (req, res) => {
+app.post('/advisors', async (req, res) => {
   const {
     sortBy = 'reviews',
     sortDirection = 'desc',
@@ -48,13 +47,14 @@ app.get('/', async (req, res) => {
     }
   );
 
-  const verbalStatus = statusMap[status];
   let advisors = dbAdvisors.filter(advisor => 
-    ((verbalStatus !== 'all' && advisor.status === verbalStatus) || verbalStatus === 'all')
-    && ((language !== 'all' && advisor.language === language) || language === 'all')
+    (status === -1 || advisor.status === status)
+    && (language === 'all' || advisor.language === language)
   ).slice(page*count, page*count+count);
 
-  res.send(advisors);
+  setTimeout(() => {
+    res.send(advisors);
+  }, 1200);
 });
 
 app.listen(port, (err) => {
