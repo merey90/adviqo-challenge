@@ -39,7 +39,19 @@ function FilterDialog(props) {
     classes,
     fullScreen
   } = props;
-  const languages = ['all', 'english', 'kazakh'];
+  const languages = [
+    'all',
+    'english',
+    'danish',
+    'french',
+    'german',
+    'russian',
+    'ukrainian',
+    'kazakh',
+    'turkish',
+    'spanish',
+    'italian'
+  ];
   return (
     <Dialog
       fullScreen={fullScreen}
