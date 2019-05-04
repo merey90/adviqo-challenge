@@ -1,20 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`render Advisor 1`] = `
-<WithStyles(TableRow)>
-  <WithStyles(TableCell)>
-    Merey Zholdas
-  </WithStyles(TableCell)>
-  <WithStyles(TableCell)>
-    Kazakh
-  </WithStyles(TableCell)>
-  <WithStyles(TableCell)>
-    online
-  </WithStyles(TableCell)>
-  <WithStyles(TableCell)
-    align="right"
-  >
-    4
-  </WithStyles(TableCell)>
-</WithStyles(TableRow)>
+<Advisor
+  advisor={
+    Object {
+      "fullName": "Merey Zholdas",
+      "id": 1,
+      "language": "Kazakh",
+      "reviews": 4,
+      "status": "online",
+    }
+  }
+  classes={
+    Object {
+      "tableCell": "Advisor-tableCell-1",
+    }
+  }
+/>
 `;
