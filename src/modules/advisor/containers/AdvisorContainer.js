@@ -4,9 +4,12 @@ import {
   Grid,
   Fab,
   Table,
-  TableBody
+  TableBody,
+  TableCell,
+  TableRow
 } from '@material-ui/core';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Advisor from '../components/Advisor';
 import FilterDialog from '../components/FilterDialog';
@@ -19,6 +22,7 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
     marginBottom: theme.spacing.unit * 2,
+    overflowX: 'auto'
   },
   advisorContainer: {
     justifyContent: 'center'
@@ -27,6 +31,15 @@ const styles = theme => ({
     position: 'fixed',
     bottom: '50px',
     right: '50px'
+  },
+  fabProgress: {
+    position: 'absolute',
+    top: -6,
+    left: -6,
+    zIndex: 1,
+  },
+  table: {
+    minWidth: 340,
   }
 });
 
@@ -322,49 +335,45 @@ class AdvisorContainer extends React.Component {
     const { classes } = this.props;
     const { fetching, advisors } = this.state;
     return (
-      <Grid container className={classes.advisorContainer}>
-        <Fab color="primary" aria-label="Search" className={classes.fab}
-          onClick={this.triggerFilterDialog}
-        >
-          <FilterListIcon />
-        </Fab>
-        <Grid item xs={12} sm={10} md={6} lg={6}>
-          <FilterDialog
-            isFiltering={this.state.isFiltering}
-            handleInputChange={this.handleInputChange}
-            handleFilterSubmit={this.handleFilterSubmit}
-            triggerFilterDialog={this.triggerFilterDialog}
-            filter={this.state.filter}
-          />
-          <Paper className={classes.mainPapers}>
-            <Table className={classes.table} aria-labelledby="tableTitle">
-              <AdvisorTableHead
-                filter={this.state.filter}
-                sortHandler={this.sortAdvisorsBy}
-              />
-              <TableBody>
-                {advisors.map(advisor =>
-                  <Advisor key={advisor.id} advisor={advisor} />)}
-              </TableBody>
-            </Table>
-              
-            {/* <table>
-              <thead>
-                <tr>
-                  <th>Full name</th>
-                  <th>Language</th>
-                  <th>Status</th>
-                  <th onClick={() => this.sortAdvisorsBy('reviews')}>Reviews</th>
-                </tr>
-              </thead>
-              <tbody>
-                {advisors.map(advisor =>
-                  <Advisor key={advisor.id} advisor={advisor} />)}
-              </tbody>
-            </table> */}
-          </Paper>
+      <div>
+        <div className={classes.fab}>
+          <Fab color="secondary" aria-label="Search"
+            onClick={this.triggerFilterDialog}
+          >
+            <FilterListIcon />
+          </Fab>
+          {fetching && <CircularProgress size={68} className={classes.fabProgress} />}
+        </div>
+        <Grid container className={classes.advisorContainer}>
+          <Grid item xs={12} sm={10} md={6} lg={6}>
+            <FilterDialog
+              isFiltering={this.state.isFiltering}
+              handleInputChange={this.handleInputChange}
+              handleFilterSubmit={this.handleFilterSubmit}
+              triggerFilterDialog={this.triggerFilterDialog}
+              filter={this.state.filter}
+            />
+            <Paper className={classes.mainPapers}>
+              <Table className={classes.table} aria-labelledby="tableTitle">
+                <AdvisorTableHead
+                  filter={this.state.filter}
+                  sortHandler={this.sortAdvisorsBy}
+                />
+                <TableBody>
+                  {advisors.map(advisor =>
+                    <Advisor key={advisor.id} advisor={advisor} />)}
+                  {!fetching && !advisors.length ? 
+                    <TableRow>
+                      <TableCell colSpan={4} className={classes.tableCell}>
+                        No results found
+                      </TableCell>
+                    </TableRow> : null}
+                </TableBody>
+              </Table>
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
+      </div>
     );
   }
 };

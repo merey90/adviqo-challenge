@@ -6,24 +6,33 @@ import {
   TableSortLabel,
   Tooltip
 } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+  tableCell: {
+    paddingLeft: '5px',
+    paddingRight: '4px'
+  }
+});
 
 function AdvisorTableHead (props) {
-  const { filter, sortHandler } = props;
-	console.log("TCL: AdvisorTableHead -> filter", filter)
+  const { filter, sortHandler, classes } = props;
   
   return (
     <TableHead>
       <TableRow>
-        <TableCell>
+        <TableCell className={classes.tableCell}>
           Full name
         </TableCell>
-        <TableCell>
+        <TableCell className={classes.tableCell}>
           Language
         </TableCell>
-        <TableCell>
+        <TableCell className={classes.tableCell}>
           Status
         </TableCell>
         <TableCell
+          align={'right'}
+          className={classes.tableCell}
           sortDirection={filter.sortBy === 'reviews' ? filter.sortDirection : false}
         >
           <Tooltip
@@ -44,4 +53,4 @@ function AdvisorTableHead (props) {
   )
 };
 
-export default AdvisorTableHead;
+export default withStyles(styles)(AdvisorTableHead);
