@@ -29,6 +29,6 @@ advisors by the number of reviews he/she received.
 - [x] Basic testing
 ### Bonus:
 - [x] Nice look and feel
-- [ ] Use a node.js server to serve data to the client
+- [x] Use a node.js server to serve data to the client
 - [x] Use Promise and setTimeout to simulate a delay in returning response through a network
 - [ ] Unlimited scrolling of advisors when user scrolls to the bottom of the page
