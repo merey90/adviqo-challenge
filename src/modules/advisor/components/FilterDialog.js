@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { withStyles } from '@material-ui/core/styles';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 
 const styles = theme => ({
   form: {
@@ -35,11 +36,13 @@ function FilterDialog(props) {
     handleFilterSubmit,
     handleInputChange,
     triggerFilterDialog,
-    classes
+    classes,
+    fullScreen
   } = props;
   const languages = ['all', 'english', 'kazakh'];
   return (
     <Dialog
+      fullScreen={fullScreen}
       open={isFiltering}
       onClose={triggerFilterDialog}
       aria-labelledby="form-dialog-title"
@@ -89,4 +92,4 @@ function FilterDialog(props) {
   )
 }
 
-export default withStyles(styles)(FilterDialog);
+export default withMobileDialog({breakpoint: 'xs'})(withStyles(styles)(FilterDialog));
