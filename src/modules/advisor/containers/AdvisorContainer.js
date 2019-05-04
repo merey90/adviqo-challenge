@@ -90,7 +90,12 @@ class AdvisorContainer extends React.Component {
       status: statusMap[filter.status]
     }
     try {
-      advisors = (await Axios.post('http://localhost:5000/advisors', body)).data;
+      const result = await Axios.post('http://localhost:5000/advisors', body);
+      advisors = await (new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(result.data);
+        }, 1200);
+      }));
     } catch (error) {
       this.setState({
         error
