@@ -52,9 +52,7 @@ app.post('/advisors', async (req, res) => {
     && (language === 'all' || advisor.language === language)
   ).slice(page*count, page*count+count);
 
-  setTimeout(() => {
-    res.send(advisors);
-  }, 1200);
+  res.send(advisors);
 });
 
 app.listen(port, (err) => {
