@@ -2,13 +2,16 @@ import React from 'react';
 import {
   Paper,
   Grid,
-  Fab
+  Fab,
+  Table,
+  TableBody
 } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+import FilterListIcon from '@material-ui/icons/FilterList';
 
 import Advisor from '../components/Advisor';
 import FilterDialog from '../components/FilterDialog';
 import { withStyles } from '@material-ui/core/styles';
+import AdvisorTableHead from '../components/AdvisorTableHead';
 
 const styles = theme => ({
   mainPapers: {
@@ -34,6 +37,7 @@ class AdvisorContainer extends React.Component {
     this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.triggerFilterDialog = this.triggerFilterDialog.bind(this);
+    this.sortAdvisorsBy = this.sortAdvisorsBy.bind(this);
 
     this.state = {
       advisors: [],
@@ -280,6 +284,7 @@ class AdvisorContainer extends React.Component {
   }
 
   async sortAdvisorsBy (column) {
+		console.log("TCL: sortAdvisorsBy -> column", column)
     const filter = {...this.state.filter};
     let sortDirection = 'desc';
     if(column === filter.sortBy) {
@@ -321,7 +326,7 @@ class AdvisorContainer extends React.Component {
         <Fab color="primary" aria-label="Search" className={classes.fab}
           onClick={this.triggerFilterDialog}
         >
-          <SearchIcon />
+          <FilterListIcon />
         </Fab>
         <Grid item xs={12} sm={10} md={6} lg={6}>
           <FilterDialog
@@ -332,7 +337,18 @@ class AdvisorContainer extends React.Component {
             filter={this.state.filter}
           />
           <Paper className={classes.mainPapers}>
-            <table>
+            <Table className={classes.table} aria-labelledby="tableTitle">
+              <AdvisorTableHead
+                filter={this.state.filter}
+                sortHandler={this.sortAdvisorsBy}
+              />
+              <TableBody>
+                {advisors.map(advisor =>
+                  <Advisor key={advisor.id} advisor={advisor} />)}
+              </TableBody>
+            </Table>
+              
+            {/* <table>
               <thead>
                 <tr>
                   <th>Full name</th>
@@ -345,7 +361,7 @@ class AdvisorContainer extends React.Component {
                 {advisors.map(advisor =>
                   <Advisor key={advisor.id} advisor={advisor} />)}
               </tbody>
-            </table>
+            </table> */}
           </Paper>
         </Grid>
       </Grid>

@@ -1,18 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`render Advisor 1`] = `
-<tr>
-  <td>
+<WithStyles(TableRow)>
+  <WithStyles(TableCell)>
     Merey Zholdas
-  </td>
-  <td>
+  </WithStyles(TableCell)>
+  <WithStyles(TableCell)>
     Kazakh
-  </td>
-  <td>
+  </WithStyles(TableCell)>
+  <WithStyles(TableCell)>
     online
-  </td>
-  <td>
+  </WithStyles(TableCell)>
+  <WithStyles(TableCell)
+    align="right"
+  >
     4
-  </td>
-</tr>
+  </WithStyles(TableCell)>
+</WithStyles(TableRow)>
 `;

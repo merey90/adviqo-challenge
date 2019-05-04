@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render AdvisorTableHead 1`] = `
+<WithStyles(TableHead)>
+  <WithStyles(TableRow)>
+    <WithStyles(TableCell)>
+      Full name
+    </WithStyles(TableCell)>
+    <WithStyles(TableCell)>
+      Language
+    </WithStyles(TableCell)>
+    <WithStyles(TableCell)>
+      Status
+    </WithStyles(TableCell)>
+    <WithStyles(TableCell)
+      sortDirection="desc"
+    >
+      <WithStyles(Tooltip)
+        enterDelay={300}
+        title="Sort"
+      >
+        <WithStyles(TableSortLabel)
+          active={true}
+          direction="desc"
+          onClick={[Function]}
+        >
+          Reviews
+        </WithStyles(TableSortLabel)>
+      </WithStyles(Tooltip)>
+    </WithStyles(TableCell)>
+  </WithStyles(TableRow)>
+</WithStyles(TableHead)>
+`;
