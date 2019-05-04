@@ -52,6 +52,7 @@ class AdvisorContainer extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.triggerFilterDialog = this.triggerFilterDialog.bind(this);
     this.sortAdvisorsBy = this.sortAdvisorsBy.bind(this);
+    this.onScroll = this.onScroll.bind(this);
 
     this.state = {
       advisors: [],
@@ -63,19 +64,47 @@ class AdvisorContainer extends React.Component {
         status: 'all',
         sortBy: 'reviews',
         sortDirection: 'desc',
-        page: 0
-      }
+        page: 0,
+        count: 20
+      },
+      endOfPage: false
     }
   }
 
   componentDidMount () {
+    window.addEventListener('scroll', this.onScroll, false);
     this.getAdvisors();
   }
 
-  async getAdvisors () {
-    this.setState({
-      fetching: true
+  componentWillUnmount () {
+    window.removeEventListener('scroll', this.onScroll, false);
+  }
+
+  onScroll () {
+    const { advisors, fetching, endOfPage } = this.state;
+    if (
+      (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 300) &&
+      advisors.length && !fetching && !endOfPage
+    ) {
+      this.onPaginatedSearch();
+    }
+  }
+
+  onPaginatedSearch () {
+		this.getAdvisors(this.state.filter.page+1);
+  }
+
+  async getAdvisors (page = 0) {
+    await this.setState({
+      fetching: true,
+      filter: {
+        ...this.state.filter,
+        page
+      },
+      endOfPage: !(page === 0)
     });
+    if(page === 0) window.scrollTo(0, 0);
+
     const { filter } = this.state;
     const statusMap = {
       'all': -1,
@@ -89,6 +118,7 @@ class AdvisorContainer extends React.Component {
       sortDirection: filter.sortDirection === 'desc' ? '-1' : '1',
       status: statusMap[filter.status]
     }
+
     try {
       const result = await Axios.post('http://localhost:5000/advisors', body);
       advisors = await (new Promise((resolve) => {
@@ -107,7 +137,10 @@ class AdvisorContainer extends React.Component {
     }
 
     this.setState({
-      advisors
+      advisors: filter.page > 0 ?
+        [...this.state.advisors, ...advisors]
+        : advisors,
+      endOfPage: filter.page > 0 && advisors.length < filter.count
     });
   }
 
