@@ -156,7 +156,25 @@ class AdvisorContainer extends React.Component {
 
     await this.setState({ filter });
 
-    this.getAdvisors();
+    // Do not fetch from backend if we already have all results
+    if(this.state.endOfPage) {
+      const advisors = this.state.advisors.sort(
+        (current, next) => {
+          let comparatorA = current, comparatorB = next;
+          if(sortDirection === 'desc') {
+            comparatorA = next;
+            comparatorB = current;
+          }
+          if(comparatorA[column] < comparatorB[column]) return -1;
+          if(comparatorA[column] > comparatorB[column]) return 1;
+          return 0;
+        }
+      );
+
+      this.setState({ advisors });
+    } else {
+      this.getAdvisors();
+    }
   }
 
   handleInputChange (e) {
