@@ -1,4 +1,5 @@
 import React from 'react';
+import Axios from 'axios';
 import {
   Paper,
   Grid,
@@ -61,7 +62,8 @@ class AdvisorContainer extends React.Component {
         language: 'all',
         status: 'all',
         sortBy: 'reviews',
-        sortDirection: 'desc'
+        sortDirection: 'desc',
+        page: 0
       }
     }
   }
@@ -74,10 +76,21 @@ class AdvisorContainer extends React.Component {
     this.setState({
       fetching: true
     });
+    const { filter } = this.state;
+    const statusMap = {
+      'all': -1,
+      'online': 1,
+      'offline': 0
+    };
 
     let advisors = [];
+    let body = {
+      ...filter,
+      sortDirection: filter.sortDirection === 'desc' ? '-1' : '1',
+      status: statusMap[filter.status]
+    }
     try {
-      advisors = await this.mockBackend(this.state.filter);
+      advisors = (await Axios.post('http://localhost:5000/advisors', body)).data;
     } catch (error) {
       this.setState({
         error
@@ -93,211 +106,7 @@ class AdvisorContainer extends React.Component {
     });
   }
 
-  async mockBackend (filter) {
-    return new Promise((resolve) => {
-      const dbAdvisors = [{
-        id: 1,
-        fullName: 'Merey Zholdas',
-        language: 'kazakh',
-        status: 'online',
-        reviews: 4
-      }, {
-        id: 2,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 3,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 4,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 5,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 6,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 7,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 8,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 9,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 10,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 11,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 12,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 13,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 14,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 15,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 16,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 17,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 18,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 19,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 20,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 21,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 22,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 23,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 24,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 25,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 26,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 27,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 28,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }, {
-        id: 29,
-        fullName: 'Bruce Wayne',
-        language: 'english',
-        status: 'offline',
-        reviews: 10
-      }];
-
-      let result = [];
-
-      result = dbAdvisors.filter(advisor => 
-        ((filter.status !== 'all' && advisor.status === filter.status) || filter.status === 'all')
-        && ((filter.language !== 'all' && advisor.language === filter.language) || filter.language === 'all')
-      );
-
-      result = result.sort(
-        (current, next) => {
-          let comparatorA = current, comparatorB = next;
-          if(filter.sortDirection === 'desc') {
-            comparatorA = next;
-            comparatorB = current;
-          }
-          if(comparatorA[filter.sortBy] < comparatorB[filter.sortBy]) return -1;
-          if(comparatorA[filter.sortBy] > comparatorB[filter.sortBy]) return 1;
-          return 0;
-        }
-      );
-      setTimeout(() => {
-        resolve(result);
-      }, 1500);
-    });
-  }
-
   async sortAdvisorsBy (column) {
-		console.log("TCL: sortAdvisorsBy -> column", column)
     const filter = {...this.state.filter};
     let sortDirection = 'desc';
     if(column === filter.sortBy) {
