@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render FilterDialog 1`] = `
+<FilterDialog
+  classes={
+    Object {
+      "form": "FilterDialog-form-1",
+      "formControl": "FilterDialog-formControl-2",
+    }
+  }
+  filter={
+    Object {
+      "language": "all",
+      "sortBy": "reviews",
+      "sortDirection": "desc",
+      "status": "all",
+    }
+  }
+  handleFilterSubmit={[Function]}
+  handleInputChange={[Function]}
+  isFiltering={true}
+  triggerFilterDialog={[Function]}
+/>
+`;

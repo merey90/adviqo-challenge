@@ -1,9 +1,13 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import {
+  MuiThemeProvider,
+  withStyles
+} from '@material-ui/core/styles';
+import {
+  AppBar,
+  Toolbar,
+  Typography
+} from '@material-ui/core';
 
 import AdvisorContainer from './modules/advisor/containers/AdvisorContainer';
 
@@ -20,7 +24,8 @@ const styles = theme => ({
     marginRight: '20px',
   },
   main: {
-    textAlign: 'center'
+    textAlign: 'center',
+    padding: theme.spacing.unit*2
   }
 });
 
