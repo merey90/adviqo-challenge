@@ -1,9 +1,12 @@
 import React from 'react';
 import {
   TableCell,
-  TableRow
+  TableRow,
+  Tooltip
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import RadioButtonChecked from '@material-ui/icons/RadioButtonChecked';
+import RadioButtonUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 
 const styles = theme => ({
   tableCell: {
@@ -18,7 +21,23 @@ function Advisor(props) {
     <TableRow>
       <TableCell className={classes.tableCell}>{advisor.fullName}</TableCell>
       <TableCell className={classes.tableCell}>{advisor.language}</TableCell>
-      <TableCell className={classes.tableCell}>{advisor.status}</TableCell>
+      <TableCell className={classes.tableCell}>
+      <Tooltip
+        title={!!advisor.status ? 'online':'offline'}
+        enterDelay={300}
+      >
+        {!!advisor.status ?
+          <RadioButtonChecked
+            fontSize="large"
+            color="primary"
+          /> :
+          <RadioButtonUnchecked
+            fontSize="large"
+            color="error"
+          />
+        }
+      </Tooltip>
+      </TableCell>
       <TableCell className={classes.tableCell} align={'right'}>
         {advisor.reviews}
       </TableCell>
